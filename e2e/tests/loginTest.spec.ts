@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
-import { testUser1 } from "./src/test-data/user.data";
-import { generateTotp } from "./utilites/totp";
+import { testUser1 } from "../models/user.data";
+import { generateTotp } from "../models/totp";
+
 
 test("User can login correctly", async ({ page }) => {
   const userEmail = testUser1.userEmail;
@@ -13,7 +14,7 @@ test("User can login correctly", async ({ page }) => {
   await loginPage.goto();
   await loginPage.login(userEmail, userPassword);
   
-  await loginPage.twoFaceLoginInput.fill(code);
+  await loginPage.twoFaceLoginInput().fill(code);
   await loginPage.twoStepVerificationSubmit.click();
   await expect(loginPage.logo).toBeVisible();
 });
