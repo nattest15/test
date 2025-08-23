@@ -11,8 +11,8 @@ export class LoginPage extends BasePage {
     continueBtn: (): Locator => this.page.getByTestId("login-submit-idf-testid"),
     loginBtn: (): Locator => this.page.getByTestId("login-submit-idf-testid"),
     logo: (): Locator => this.page.getByTestId('team25-header-logo'),
-    twoFaceLoginInput: (): Locator => this.page.locator('#two-step-verification-otp-code-input'),
-    twoStepVerificationSubmit: (): Locator => this.page.locator('#two-step-verification-submit'),
+    twoFactorCodeInput: (): Locator => this.page.locator('#two-step-verification-otp-code-input'),
+    twoFactorSubmitBtn: (): Locator => this.page.locator('#two-step-verification-submit'),
     loginBtnOnAttlasian: (): Locator => this.page.getByTestId('login'),
     incorrectLoginTitle: (): Locator => this. page.getByTestId('form-error--content')
   }
@@ -27,6 +27,4 @@ export class LoginPage extends BasePage {
     await this.locators.passwordInput().fill(password);
     await this.locators.loginBtn().click();
   }
-
-  
 }

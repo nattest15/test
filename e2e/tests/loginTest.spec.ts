@@ -14,7 +14,7 @@ test("User can login correctly", async ({ page }) => {
   await loginPage.goto();
   await loginPage.login(userEmail, userPassword);
   
-  await loginPage.twoFaceLoginInput.fill(code);
+  await loginPage.twoFaceLoginInput().fill(code);
   await loginPage.twoStepVerificationSubmit.click();
   await expect(loginPage.logo).toBeVisible();
 });
