@@ -13,10 +13,9 @@ test("User can login correctly", async ({ page }) => {
 
   await loginPage.goto();
   await loginPage.login(userEmail, userPassword);
-  
-  await loginPage.twoFaceLoginInput().fill(code);
-  await loginPage.twoStepVerificationSubmit.click();
-  await expect(loginPage.logo).toBeVisible();
+  await loginPage.login2FA(code);
+  await loginPage.expectLogoVisible();
+
 });
 test("Login with incorrect password", async ({ page }) => {
   const userEmail = testUser1.userEmail;
@@ -27,6 +26,5 @@ test("Login with incorrect password", async ({ page }) => {
 
   await loginPage.goto();
   await loginPage.login(userEmail, userPassword);
-  
-  await expect(loginPage.incorrectLoginTitle).toContainText('Incorrect email address and / or password. If you recently migrated your Trello account to an Atlassian account, you will need to use your Atlassian account password. Alternatively, you can get help logging in.');
-});
+  await loginPage.expectIncorrectLoginTitle();
+  });
