@@ -10,19 +10,16 @@ export const loginPageTest = baseTest.extend<{ loginPage: LoginPage }>({
   },
 });
 
-export const generateTotopTest = baseTest.extend<{
-  generateTotp: string;
-}>({
+export const generateTotopTest = baseTest.extend<{ generateTotp: string }>({
   generateTotp: async ({}, use) => {
     const secret = process.env.TOTP_SECRET;
     if (!secret) {
       throw new Error("TOTP_SECRET is not defined in .env");
-  };
+    }
 
     const totpCode = authenticator.generate(secret);
     await use(totpCode);
-
-},
+  },
 });
 
 export { expect, mergeTests } from "@playwright/test";
