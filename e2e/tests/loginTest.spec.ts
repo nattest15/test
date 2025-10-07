@@ -1,8 +1,12 @@
-import { generateTotopTest, loginPageTest, mergeTests } from "../fixtures/loginPage.fixture";
+import {
+  generateTotopTest,
+  pageObjectTest,
+  mergeTests,
+} from "../fixtures/pages.fixture";
 import { testUser1 } from "../models/user.data";
 import { generateTotp } from "../models/totp";
 
-const test = mergeTests(loginPageTest, generateTotopTest); //
+const test = mergeTests(pageObjectTest, generateTotopTest);
 
 test("User can login correctly", async ({ loginPage, generateTotp }) => {
   const userEmail = testUser1.userEmail;
@@ -13,6 +17,7 @@ test("User can login correctly", async ({ loginPage, generateTotp }) => {
   await loginPage.login2FA(generateTotp); //=> jak mozna ten code przekazać?
   await loginPage.expectLogoVisible();
 });
+
 test("Login with incorrect password", async ({ loginPage }) => {
   const userEmail = testUser1.userEmail;
   const userPassword = "inncorectPassword";
