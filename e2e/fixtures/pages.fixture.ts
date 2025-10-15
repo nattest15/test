@@ -28,7 +28,7 @@ export const pageObjectTest = baseTest.extend<IPages>({
 
 export const generateTotopTest = baseTest.extend<{ generateTotp: string }>({
   generateTotp: async ({}, use) => {
-    const secret = process.env.TOTP_SECRET;
+    const secret = process.env.QA_TOTP_SECRET;
     if (!secret) {
       throw new Error("TOTP_SECRET is not defined in .env");
     }
@@ -41,9 +41,9 @@ export const generateTotopTest = baseTest.extend<{ generateTotp: string }>({
 export const loginFixtureTest = baseTest.extend<{loginTest: () => Promise<void>;}>({
   loginTest: async ({page}, use) => {
     const loginPage = new LoginPage(page);
-    const userEmail = process.env.USER_EMAIL;
-    const userPassword = process.env.USER_PASSWORD;
-    const secret = process.env.TOTP_SECRET;
+    const userEmail = process.env.QA_USER_EMAIL;
+    const userPassword = process.env.QA_USER_PASSWORD;
+    const secret = process.env.QA_TOTP_SECRET;
     if (!secret) {
       throw new Error("TOTP_SECRET is not defined in .env");
     }

@@ -4,7 +4,6 @@ import {
   mergeTests,
 } from "../fixtures/pages.fixture";
 import { testUser1 } from "../models/user.data";
-import { generateTotp } from "../models/totp";
 
 const test = mergeTests(pageObjectTest, generateTotopTest);
 
