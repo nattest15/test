@@ -1,32 +1,27 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/loginPage";
+import {
+  generateTotopTest,
+  pageObjectTest,
+  mergeTests,
+} from "../fixtures/pages.fixture";
 import { testUser1 } from "../models/user.data";
-import { generateTotp } from "../models/totp";
 
+const test = mergeTests(pageObjectTest, generateTotopTest);
 
-test("User can login correctly", async ({ page }) => {
+test("User can login correctly", async ({ loginPage, generateTotp }) => {
   const userEmail = testUser1.userEmail;
   const userPassword = testUser1.userPassword;
-  const loginPage = new LoginPage(page);
-  const code = generateTotp()
-  console.log(code)
 
   await loginPage.goto();
   await loginPage.login(userEmail, userPassword);
-  
-  await loginPage.twoFaceLoginInput().fill(code);
-  await loginPage.twoStepVerificationSubmit.click();
-  await expect(loginPage.logo).toBeVisible();
+  await loginPage.login2FA(generateTotp); //=> jak mozna ten code przekazać?
+  await loginPage.expectLogoVisible();
 });
-test("Login with incorrect password", async ({ page }) => {
+
+test("Login with incorrect password", async ({ loginPage }) => {
   const userEmail = testUser1.userEmail;
-  const userPassword = 'inncorectPassword';
-  const loginPage = new LoginPage(page);
-  const code = generateTotp()
-  console.log(code)
+  const userPassword = "inncorectPassword";
 
   await loginPage.goto();
   await loginPage.login(userEmail, userPassword);
-  
-  await expect(loginPage.incorrectLoginTitle).toContainText('Incorrect email address and / or password. If you recently migrated your Trello account to an Atlassian account, you will need to use your Atlassian account password. Alternatively, you can get help logging in.');
+  await loginPage.expectIncorrectLoginTitle();
 });
