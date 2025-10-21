@@ -3,9 +3,11 @@ import { test as baseTest } from "@playwright/test";
 import { authenticator } from "otplib";
 import { BoardsPage } from "../pages/boardsPage";
 import { login } from "../utils/loginUtil";
+import { BoardPage } from "../pages/boardPage";
 interface IPages {
   loginPage: LoginPage;
   boardsPage: BoardsPage;
+  boardPage: BoardPage;
 }
 
 export const pageObjectTest = baseTest.extend<IPages>({
@@ -24,6 +26,13 @@ export const pageObjectTest = baseTest.extend<IPages>({
     },
     { auto: true },
   ],
+  boardPage: [
+    async ({ page }, use) => {
+      const boardPage = new BoardPage(page);
+      await use(boardPage);
+    },
+    { auto: true },
+  ],
 });
 
 export const generateTotopTest = baseTest.extend<{ generateTotp: string }>({
@@ -38,8 +47,10 @@ export const generateTotopTest = baseTest.extend<{ generateTotp: string }>({
   },
 });
 
-export const loginFixtureTest = baseTest.extend<{loginTest: () => Promise<void>;}>({
-  loginTest: async ({page}, use) => {
+export const loginFixtureTest = baseTest.extend<{
+  loginTest: () => Promise<void>;
+}>({
+  loginTest: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     const userEmail = process.env.QA_USER_EMAIL;
     const userPassword = process.env.QA_USER_PASSWORD;
