@@ -9,6 +9,6 @@
     "dotenv": "^17.2.1"
   },
   "scripts": {
-    "open:ui": "npx playwright test"
+    "open:ui": "npx playwright test --ui"
   }
 }
